@@ -2,9 +2,20 @@
   "name": "Flashcards",
   "description": "Chrome Flashcards INDEV",
   "version": "1.0",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"], 
   "manifest_version": 3,
   "action": {
     "default_popup": "popup.html",
     "default_icon": "flashcards.png"
-  }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"]
+    }
+  ]
 }
