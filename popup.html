@@ -1,4 +1,67 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
+<!-- <body>
 <h1>
     Welcome to the FLASHCARDIANATIONAMISMINGS
 </h1>
+<script>
+    var question = prompt("Question: ");
+    var answer = prompt("Answer: ");
+</script>
+</body> -->
+
+<!-- <body>
+    <h1>Welcome to FLASHCARDIANATIONAMISMINGS</h1>
+
+    <label for="questionInput">Question:</label>
+    <input type="text" id="questionInput" placeholder="Enter your question">
+
+    <br><br>
+
+    <label for="answerInput">Answer:</label>
+    <input type="text" id="answerInput" placeholder="Enter your answer">
+
+    <br><br>
+
+    <button onclick="saveFlashcard()">Submit</button>
+
+    <script>
+        function saveFlashcard() {
+            var question = document.getElementById("questionInput").value;
+            var answer = document.getElementById("answerInput").value;
+
+            console.log("Question:", question);
+            console.log("Answer:", answer);
+
+            alert("Flashcard Saved!\n\nQuestion: " + question + "\nAnswer: " + answer);
+        }
+    </script>
+</body> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Saver</title>
+</head>
+<body>
+    <h1>Flashcard Saver</h1>
+
+    <label for="questionInput">Question:</label>
+    <input type="text" id="questionInput" placeholder="Enter your question">
+
+    <br><br>
+
+    <label for="answerInput">Answer:</label>
+    <input type="text" id="answerInput" placeholder="Enter your answer">
+
+    <br><br>
+
+    <button id="saveButton">Save Flashcard</button>
+    <button id="showButton">Show Flashcards</button>
+
+    <ul id="flashcardList"></ul>
+
+    <script src="popup.js"></script>
+</body>
+</html>
