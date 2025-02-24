@@ -44,3 +44,9 @@ function createOrRemoveBox() {
 
     document.body.appendChild(box);
 }
+
+const card = document.querySelector(".flashcard-inner");
+
+card.addEventListener("click", function (e) {
+  card.classList.toggle('is-flipped');
+});
