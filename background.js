@@ -11,7 +11,7 @@ function injectBox() {
     });
 }
 
-// runs every 10 seconds
+// runs every 10 seconds hiiiiiiii
 setInterval(injectBox, 10000);
 
 // function to be injected into page
