@@ -35,6 +35,7 @@ function createOrRemoveBox() {
         setTimeout(function () {
             element.remove()
         }, 2000)
+        card.classList.toggle('is-flipped');
     }
 
     // remove box on click
@@ -44,9 +45,3 @@ function createOrRemoveBox() {
 
     document.body.appendChild(box);
 }
-
-const card = document.querySelector(".flashcard-inner");
-
-card.addEventListener("click", function (e) {
-  card.classList.toggle('is-flipped');
-});
