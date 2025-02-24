@@ -1,27 +1,68 @@
+/* outer container, set up for the flip */
 .flashcard-box {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 200px;
     height: 100px;
-    background: purple;
-    border: 2px solid black;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    text-align: center;
-    font-size: 16px;
+    perspective: 1000px; /* create perspective so there is a plane for the flip */
     cursor: pointer;
     z-index: 9999;
-    
-    /* 3D Flip Properties */
+  }
+  
+  /* inner container that will rotate, contains front/back */
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  /* flashcard styles */
+  .flashcard-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.flashcard-box.is-flipped {
+    border: 2px solid black;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  /* front side (visible by default) */
+  .flashcard-front {
+    background: purple;
+  }
+  /* back side (rotated 180deg so it only shows when flipped) */
+  .flashcard-back {
+    background: skyblue;
     transform: rotateY(180deg);
-    background: darkblue; /* Change background when flipped */
-}
+  }
+  
+  /* when outer container flipped is true, the inner (front/back) will flip */
+  .flashcard-box.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+  }
+  
+  /* close (X) button styling */
+  .close-button {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  

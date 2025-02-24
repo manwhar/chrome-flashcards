@@ -17,35 +17,45 @@ setInterval(injectBox, 1000);
 // function to be injected into page
 function createOrRemoveBox() {
     if (document.getElementById("flashcard-box")) return;
-
-    // make the flashcard
+  
+    // make outer container (for perspective)
     const box = document.createElement("div");
     box.id = "flashcard-box";
     box.className = "flashcard-box";
-
-    // text on flashcard
-    const flashcard_text = {
-        front: "click meeee",
-        back: "clicked!"
+  
+    // make inner container that will actually flip
+    const inner = document.createElement("div");
+    inner.className = "flashcard-inner";
+  
+    // make front 
+    const front = document.createElement("div");
+    front.className = "flashcard-face flashcard-front";
+    front.innerText = "click meeee";
+    // make back 
+    const back = document.createElement("div");
+    back.className = "flashcard-face flashcard-back";
+    back.innerText = "clicked!";
+  
+    // make the close (x) button and append it to the outer container (so it does not flip)
+    const closeButton = document.createElement("button");
+    closeButton.className = "close-button";
+    closeButton.innerText = "X";
+    closeButton.onclick = (e) => {
+        e.stopPropagation();
+        box.remove();
     };
-
-    // the test on front side
-    box.innerText = flashcard_text.front;
-
-    // whatmakes it flip
-    function flipFlashcard() {
-        box.classList.toggle("is-flipped");
-        // toggle text for 0.6 seconds to avoid visual glitch
-        setTimeout(() => {
-            box.innerText = box.classList.contains("is-flipped") ? flashcard_text.back : flashcard_text.front;
-        }, 300);
-        // make flashcard go away after 5 seconds
-        setTimeout(() => {
-            box.remove();
-        }, 5000);
-    }
-
-    // Click event to flip the flashcard
-    box.onclick = flipFlashcard;
+    box.appendChild(closeButton);
+    
+    // append front/back to inner container, then inner container to outer box
+    inner.appendChild(front);
+    inner.appendChild(back);
+    box.appendChild(inner);
+  
+    // flip event
+    box.onclick = () => {
+      box.classList.toggle("flipped");
+    };
+  
     document.body.appendChild(box);
-}
+  }
+  
