@@ -12,7 +12,7 @@ function injectBox() {
 }
 
 // runs every 10 seconds hiiiiiiii
-setInterval(injectBox, 10000);
+setInterval(injectBox, 1000);
 
 // function to be injected into page
 function createOrRemoveBox() {
