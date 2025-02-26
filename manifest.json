@@ -2,7 +2,7 @@
   "name": "Flashcards",
   "description": "Chrome Flashcards INDEV",
   "version": "1.0",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"], 
   "manifest_version": 3,
   "action": {
