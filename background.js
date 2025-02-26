@@ -18,50 +18,65 @@ setInterval(injectBox, 1000);
 function createOrRemoveBox() {
     if (document.getElementById("flashcard-box")) return;
     
-    chrome.storage.local.set({ hmm:"test" }, function() {
-        chrome.storage.local.get([hmm], function(result) {
-            console.log("Retreived data:", result.key);
-        });
-    });
-
-    // make outer container (for perspective)
-    const box = document.createElement("div");
-    box.id = "flashcard-box";
-    box.className = "flashcard-box";
-  
-    // make inner container that will actually flip
-    const inner = document.createElement("div");
-    inner.className = "flashcard-inner";
-  
-    // make front 
-    const front = document.createElement("div");
-    front.className = "flashcard-face flashcard-front";
-    front.innerText = "click meeee";
-    // make back 
-    const back = document.createElement("div");
-    back.className = "flashcard-face flashcard-back";
-    back.innerText = "clicked!";
-  
-    // make the close (x) button and append it to the outer container (so it does not flip)
-    const closeButton = document.createElement("button");
-    closeButton.className = "close-button";
-    closeButton.innerText = "X";
-    closeButton.onclick = (e) => {
-        e.stopPropagation();
-        box.remove();
-    };
-    box.appendChild(closeButton);
+    // retrieve data from flashcard storage
+    chrome.storage.local.get(["flashcards"], function(result) {
+        
+        console.log("Retrieved data:", result.flashcards);
+        
+        // make sure any flashcards exist
+        if (!result.flashcards || Object.keys(result.flashcards).length === 0) {
+            console.log("No flashcards found.");
+            return;
+        }
     
-    // append front/back to inner container, then inner container to outer box
-    inner.appendChild(front);
-    inner.appendChild(back);
-    box.appendChild(inner);
-  
-    // flip event
-    box.onclick = () => {
-      box.classList.toggle("flipped");
-    };
-  
-    document.body.appendChild(box);
-  }
+        // pick a random flashcard to display
+        const keys = Object.keys(result.flashcards);
+        const flashcard = result.flashcards[keys[Math.floor(Math.random() * keys.length)]];
+        const frontText = flashcard["front"];
+        const backText = flashcard["back"]; 
+    
+        console.log("Front:", frontText);
+        console.log("Back:", backText);
+        
+        // make outer container (for perspective)
+        const box = document.createElement("div");
+        box.id = "flashcard-box";
+        box.className = "flashcard-box";
+    
+        // make inner container that will actually flip
+        const inner = document.createElement("div");
+        inner.className = "flashcard-inner";
+    
+        // make front 
+        const front = document.createElement("div");
+        front.className = "flashcard-face flashcard-front";
+        front.innerText = frontText;
+        // make back 
+        const back = document.createElement("div");
+        back.className = "flashcard-face flashcard-back";
+        back.innerText = backText;
+    
+        // make the close (x) button and append it to the outer container (so it does not flip)
+        const closeButton = document.createElement("button");
+        closeButton.className = "close-button";
+        closeButton.innerText = "X";
+        closeButton.onclick = (e) => {
+            e.stopPropagation();
+            box.remove();
+        };
+        box.appendChild(closeButton);
+        
+        // append front/back to inner container, then inner container to outer box
+        inner.appendChild(front);
+        inner.appendChild(back);
+        box.appendChild(inner);
+    
+        // flip event
+        box.onclick = () => {
+        box.classList.toggle("flipped");
+        };
+    
+        document.body.appendChild(box);
+    });
+}
   
