@@ -7,7 +7,7 @@
   "manifest_version": 3,
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "images/flashcards.png"
+    "default_icon": "images/ChromeIcon.png"
   },
   "background": {
     "service_worker": "background.js"
