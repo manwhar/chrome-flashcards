@@ -15,7 +15,6 @@ document.getElementById("saveButton").addEventListener("click", function () {
         flashcards[newKey] = { front: question, back: answer };
 
         chrome.storage.local.set({ flashcards }, function () {
-            //alert("Flashcard Saved!");
             document.getElementById("questionInput").value = "";
             document.getElementById("answerInput").value = "";
         });
@@ -44,6 +43,14 @@ document.getElementById("showButton").addEventListener("click", function () {
             li.appendChild(deleteButton);
             list.appendChild(li);
         });
+
+        // Show Clear All button if there are flashcards
+        let clearButton = document.getElementById("clearAllButton");
+        if (Object.keys(flashcards).length > 0) {
+            clearButton.style.display = "block";
+        } else {
+            clearButton.style.display = "none";
+        }
     });
 });
 
@@ -56,9 +63,18 @@ function deleteFlashcard(key) {
             delete flashcards[key]; // Remove the flashcard
 
             chrome.storage.local.set({ flashcards }, function () {
-                //alert("Flashcard Deleted!");
                 document.getElementById("showButton").click(); // Refresh the list
             });
         }
     });
 }
+
+// Function to clear all flashcards
+document.getElementById("clearAllButton").addEventListener("click", function () {
+    if (confirm("Are you sure you want to delete all flashcards?")) {
+        chrome.storage.local.remove("flashcards", function () {
+            document.getElementById("flashcardList").innerHTML = ""; // Clear UI
+            document.getElementById("clearAllButton").style.display = "none"; // Hide button
+        });
+    }
+});
