@@ -11,13 +11,19 @@ function injectBox() {
     });
 }
 
-// runs every 10 seconds hiiiiiiii
+// runs every second
 setInterval(injectBox, 1000);
 
 // function to be injected into page
 function createOrRemoveBox() {
     if (document.getElementById("flashcard-box")) return;
-  
+    
+    chrome.storage.local.set({ hmm:"test" }, function() {
+        chrome.storage.local.get([hmm], function(result) {
+            console.log("Retreived data:", result.key);
+        });
+    });
+
     // make outer container (for perspective)
     const box = document.createElement("div");
     box.id = "flashcard-box";
