@@ -12,7 +12,7 @@ function injectBox() {
 }
 
 // runs every second
-setInterval(injectBox, 1000);
+setInterval(injectBox, 5000);
 
 // function to be injected into page
 function createOrRemoveBox() {

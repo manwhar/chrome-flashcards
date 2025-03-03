@@ -6,6 +6,7 @@ document.getElementById("saveButton").addEventListener("click", function () {
         alert("Please enter both a question and an answer.");
         return;
     }
+    
 
     // Get existing flashcards
     chrome.storage.local.get(["flashcards"], function (result) {
@@ -18,6 +19,9 @@ document.getElementById("saveButton").addEventListener("click", function () {
             document.getElementById("questionInput").value = "";
             document.getElementById("answerInput").value = "";
         });
+        
+    // refresh of flashcards to show new updared one
+    document.getElementById("showButton").click();
     });
 });
 
@@ -28,9 +32,22 @@ document.getElementById("showButton").addEventListener("click", function () {
         let list = document.getElementById("flashcardList");
         list.innerHTML = ""; // Clear existing list
 
-        Object.keys(flashcards).forEach(key => {
-            let li = document.createElement("li");
+        Object.keys(flashcards).forEach(key => { // runs in a forEach loop
+            let li = document.createElement("li"); // create list of flashcards for display
             li.textContent = `Q: ${flashcards[key].front} | A: ${flashcards[key].back} `;
+            
+            // create mini flashcards with q/a inside pop-up
+            let rect = document.createElement("div");
+            Object.assign(rect, {
+                id: "rectangle",
+                innerText: flashcards[key].front,
+            });
+            
+            Object.assign(rect.style, {
+                width: "50px",
+                height: "25px",
+                backgroundColor: "blue",
+            });
 
             // Create delete button
             let deleteButton = document.createElement("button");
@@ -42,6 +59,7 @@ document.getElementById("showButton").addEventListener("click", function () {
 
             li.appendChild(deleteButton);
             list.appendChild(li);
+            list.appendChild(rect);
         });
 
         // Show Clear All button if there are flashcards
