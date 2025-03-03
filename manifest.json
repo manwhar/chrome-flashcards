@@ -10,7 +10,8 @@
     "default_icon": "images/ChromeIcon.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "persistent": false
   },
   "content_scripts": [
     {
