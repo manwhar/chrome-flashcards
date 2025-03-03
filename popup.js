@@ -69,6 +69,7 @@ document.getElementById("showButton").addEventListener("click", function () {
         } else {
             clearButton.style.display = "none";
         }
+        
     });
 });
 
@@ -96,3 +97,4 @@ document.getElementById("clearAllButton").addEventListener("click", function () 
         });
     }
 });
+
