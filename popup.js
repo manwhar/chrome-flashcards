@@ -60,17 +60,19 @@ document.getElementById("showButton").addEventListener("click", function () {
             li.appendChild(deleteButton);
             list.appendChild(li);
             list.appendChild(rect);
+
+            // Show Clear All button if there are flashcards
+            let clearButton = document.getElementById("clearAllButton");
+            if (Object.keys(flashcards).length > 0) {
+                clearButton.style.display = "block";
+            } else {
+                clearButton.style.display = "none";
+            }
+            
+        });
         });
 
-        // Show Clear All button if there are flashcards
-        let clearButton = document.getElementById("clearAllButton");
-        if (Object.keys(flashcards).length > 0) {
-            clearButton.style.display = "block";
-        } else {
-            clearButton.style.display = "none";
-        }
         
-    });
 });
 
 // Function to delete a flashcard
