@@ -1,0 +1,2 @@
+- timer is currently in global scope; flashcard will pop up x seconds after the previous one APPEARED, not DISAPPEARED
+- create 
