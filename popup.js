@@ -60,17 +60,19 @@ document.getElementById("showButton").addEventListener("click", function () {
             li.appendChild(deleteButton);
             list.appendChild(li);
             list.appendChild(rect);
+
+            // Show Clear All button if there are flashcards
+            let clearButton = document.getElementById("clearAllButton");
+            if (Object.keys(flashcards).length > 0) {
+                clearButton.style.display = "block";
+            } else {
+                clearButton.style.display = "none";
+            }
+            
+        });
         });
 
-        // Show Clear All button if there are flashcards
-        let clearButton = document.getElementById("clearAllButton");
-        if (Object.keys(flashcards).length > 0) {
-            clearButton.style.display = "block";
-        } else {
-            clearButton.style.display = "none";
-        }
         
-    });
 });
 
 // Function to delete a flashcard
@@ -90,11 +92,29 @@ function deleteFlashcard(key) {
 
 // Function to clear all flashcards
 document.getElementById("clearAllButton").addEventListener("click", function () {
-    if (confirm("Are you sure you want to delete all flashcards?")) {
+    let clearButton = document.getElementById("clearAllButton");
+
+    if (clearButton.dataset.confirm === "true") {
+        // Second click: Proceed with clearing
         chrome.storage.local.remove("flashcards", function () {
             document.getElementById("flashcardList").innerHTML = ""; // Clear UI
-            document.getElementById("clearAllButton").style.display = "none"; // Hide button
+            clearButton.style.display = "none"; // Hide button
+            clearButton.textContent = "Clear All"; // Reset text
+            clearButton.dataset.confirm = "false"; // Reset state
         });
+    } else {
+        // First click: Change text to confirmation message
+        clearButton.textContent = "Confirm Clear All";
+        clearButton.dataset.confirm = "true";
+
+        // Reset back to original text if not clicked again within 3 seconds
+        setTimeout(() => {
+            if (clearButton.dataset.confirm === "true") {
+                clearButton.textContent = "Clear All";
+                clearButton.dataset.confirm = "false";
+            }
+        }, 3000);
     }
 });
+
 
