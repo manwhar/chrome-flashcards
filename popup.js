@@ -25,89 +25,80 @@ document.getElementById("saveButton").addEventListener("click", function () {
     });
 });
 
-// Show saved flashcards
+// toggle flashcards event listener (show/ hide button)
 document.getElementById("showButton").addEventListener("click", function () {
-    chrome.storage.local.get(["flashcards"], function (result) {
-        let flashcards = result.flashcards || {};
-        let list = document.getElementById("flashcardList");
-        list.innerHTML = ""; // Clear existing list
-
-        Object.keys(flashcards).forEach(key => { // runs in a forEach loop
-            let li = document.createElement("li"); // create list of flashcards for display
-            li.textContent = `Q: ${flashcards[key].front} | A: ${flashcards[key].back} `;
+    const flashcardList = document.getElementById("flashcardList");
+    const clearButton = document.getElementById("clearAllButton");
+    const showButton = document.getElementById("showButton");
+    
+    // check if flashcards are already displayed (assuming they're hidden if innerHTML is empty or display is 'none')
+    if (flashcardList.style.display === "block") {
+        // hide the flashcards and update button text
+        flashcardList.style.display = "none";
+        clearButton.style.display = "none";
+        showButton.textContent = "Show Flashcards";
+    } else {
+        // retrieve and display flashcards
+        chrome.storage.local.get(["flashcards"], function (result) {
+            let flashcards = result.flashcards || {};
+            flashcardList.innerHTML = ""; // clear existing list
             
-            // create mini flashcards with q/a inside pop-up
-            let rect = document.createElement("div");
-            Object.assign(rect, {
-                id: "rectangle",
-                innerText: flashcards[key].front,
+            // loop through and display each flashcard
+            Object.keys(flashcards).forEach(key => {
+                let li = document.createElement("li");
+                li.textContent = `Q: ${flashcards[key].front} | A: ${flashcards[key].back}`;
+                
+                // create delete button for each individual flashcard
+                let deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.style.marginLeft = "10px";
+                deleteButton.addEventListener("click", function () {
+                    deleteFlashcard(key);
+                });
+                
+                li.appendChild(deleteButton);
+                flashcardList.appendChild(li);
             });
             
-            Object.assign(rect.style, {
-                width: "50px",
-                height: "25px",
-                backgroundColor: "blue",
-            });
-
-            // Create delete button
-            let deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.style.marginLeft = "10px";
-            deleteButton.addEventListener("click", function () {
-                deleteFlashcard(key);
-            });
-
-            li.appendChild(deleteButton);
-            list.appendChild(li);
-            list.appendChild(rect);
-
-            // Show Clear All button if there are flashcards
-            let clearButton = document.getElementById("clearAllButton");
+            // display flashcards and update button text to current state
+            flashcardList.style.display = "block";
             if (Object.keys(flashcards).length > 0) {
                 clearButton.style.display = "block";
             } else {
                 clearButton.style.display = "none";
             }
-            
+            showButton.textContent = "Hide Flashcards";
         });
-        });
-
-        
+    }
 });
 
 // Function to delete a flashcard
 function deleteFlashcard(key) {
     chrome.storage.local.get(["flashcards"], function (result) {
         let flashcards = result.flashcards || {};
-
         if (flashcards[key]) {
-            delete flashcards[key]; // Remove the flashcard
-
+            delete flashcards[key];
             chrome.storage.local.set({ flashcards }, function () {
-                document.getElementById("showButton").click(); // Refresh the list
+                document.getElementById("showButton").click(); // Refresh the list after deletion
             });
         }
     });
 }
 
-// Function to clear all flashcards
+// Clear all flashcards functionality
 document.getElementById("clearAllButton").addEventListener("click", function () {
     let clearButton = document.getElementById("clearAllButton");
 
     if (clearButton.dataset.confirm === "true") {
-        // Second click: Proceed with clearing
         chrome.storage.local.remove("flashcards", function () {
-            document.getElementById("flashcardList").innerHTML = ""; // Clear UI
-            clearButton.style.display = "none"; // Hide button
-            clearButton.textContent = "Clear All"; // Reset text
-            clearButton.dataset.confirm = "false"; // Reset state
+            document.getElementById("flashcardList").innerHTML = "";
+            clearButton.style.display = "none";
+            clearButton.textContent = "Clear All";
+            clearButton.dataset.confirm = "false";
         });
     } else {
-        // First click: Change text to confirmation message
         clearButton.textContent = "Confirm Clear All";
         clearButton.dataset.confirm = "true";
-
-        // Reset back to original text if not clicked again within 3 seconds
         setTimeout(() => {
             if (clearButton.dataset.confirm === "true") {
                 clearButton.textContent = "Clear All";
@@ -116,5 +107,3 @@ document.getElementById("clearAllButton").addEventListener("click", function () 
         }, 3000);
     }
 });
-
-

@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard Saver</title>
-    <link rel="stylesheet" href="popup.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard Saver</title>
+  <!-- i used poppins font from google -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
 </head>
 <body>
-    <div class="popup-container">
-        <h3>Add a flashcard</h3>
-        <label for="questionInput">Question:</label>
-        <input type="text" id="questionInput" placeholder="Enter your question">
-        <br><br>
-        <label for="answerInput">Answer:</label>
-        <input type="text" id="answerInput" placeholder="Enter your answer">
-        <br><br>
+  <div class="popup-container">
+    <div class="header">
+      <img src="images/ChromeIcon.png" alt="Logo" class="logo" />
+      <h2 class="title">Flashcards</h2>
+    </div>
+    <div class="content">
+      <h3>Add a Flashcard</h3>
+      <label for="questionInput">Question:</label>
+      <input type="text" id="questionInput" placeholder="Enter your question" />
+
+      <label for="answerInput">Answer:</label>
+      <input type="text" id="answerInput" placeholder="Enter your answer" />
+
+      <div class="button-group">
         <button id="saveButton">Save Flashcard</button>
         <button id="showButton">Show Flashcards</button>
-        <ul id="flashcardList"></ul>
+      </div>
+      <ul id="flashcardList"></ul>
+      <button id="clearAllButton" class="clear-button">Clear All</button>
     </div>
-    <script src="popup.js"></script>
+  </div>
+  <script src="popup.js"></script>
 </body>
 </html>
+
