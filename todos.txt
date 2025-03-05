@@ -1,2 +1,11 @@
-- timer is currently in global scope; flashcard will pop up x seconds after the previous one APPEARED, not DISAPPEARED
-- create 
+MANU:
+- Modify JSON structure to support groups
+- Create group page
+
+KATIE
+- Settings page
+- double input sliders
+
+BREA
+- groups dropdown in save flashcard menu
+- icons for settings and group
