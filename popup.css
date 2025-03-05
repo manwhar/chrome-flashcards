@@ -95,6 +95,24 @@ body {
   background-color: #ff57d0;
 }
 
+.group-select {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.group-select button {
+    width: 100px;
+    height: 200px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-right: 10px;
+    /* allow dynamic resizing */
+}
+
 /* flashcard list styling */
 #flashcardList {
   margin-top: 15px;
