@@ -71,39 +71,3 @@ document.getElementById("showButton").addEventListener("click", function () {
         });
     }
 });
-
-// Function to delete a flashcard
-function deleteFlashcard(key) {
-    chrome.storage.local.get(["flashcards"], function (result) {
-        let flashcards = result.flashcards || {};
-        if (flashcards[key]) {
-            delete flashcards[key];
-            chrome.storage.local.set({ flashcards }, function () {
-                document.getElementById("showButton").click(); // Refresh the list after deletion
-            });
-        }
-    });
-}
-
-// Clear all flashcards functionality
-document.getElementById("clearAllButton").addEventListener("click", function () {
-    let clearButton = document.getElementById("clearAllButton");
-
-    if (clearButton.dataset.confirm === "true") {
-        chrome.storage.local.remove("flashcards", function () {
-            document.getElementById("flashcardList").innerHTML = "";
-            clearButton.style.display = "none";
-            clearButton.textContent = "Clear All";
-            clearButton.dataset.confirm = "false";
-        });
-    } else {
-        clearButton.textContent = "Confirm Clear All";
-        clearButton.dataset.confirm = "true";
-        setTimeout(() => {
-            if (clearButton.dataset.confirm === "true") {
-                clearButton.textContent = "Clear All";
-                clearButton.dataset.confirm = "false";
-            }
-        }, 3000);
-    }
-});
