@@ -12,7 +12,33 @@ function injectBox() {
 }
 
 // runs every second
-setInterval(injectBox, 5000);
+let intervalTime = 5000; // Default time
+let intervalId;
+
+function startTimer() {
+    if (intervalId) clearInterval(intervalId);
+    intervalId = setInterval(injectBox, intervalTime);
+}
+
+// Load timer from storage
+chrome.storage.sync.get("timerInterval", function (data) {
+    if (data.timerInterval) {
+        intervalTime = data.timerInterval;
+    }
+    startTimer();
+});
+
+// Listen for updates
+chrome.runtime.onMessage.addListener((message) => {
+    if (message.action === "updateTimer") {
+        chrome.storage.sync.get("timerInterval", function (data) {
+            if (data.timerInterval) {
+                intervalTime = data.timerInterval;
+                startTimer();
+            }
+        });
+    }
+});
 
 // function to be injected into page
 function createOrRemoveBox() {
