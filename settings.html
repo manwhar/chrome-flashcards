@@ -7,14 +7,19 @@
     <link rel="stylesheet" href="settings.css"> <!-- Link CSS for styling -->
 </head>
 <body>
-    <h1>Settings</h1>
+    <div class="popup-container"></div>
+        <h1>Settings</h1>
 
-    <h2>Set Timer Interval</h2>
-    <label for="timerSlider">Timer Interval: <span id="sliderValue">5</span> seconds</label>
-    <input type="range" id="timerSlider" min="0" max="100" value="5">
-    
-    <button id="saveBtn">Save Timer</button> <!-- Removed duplicate button -->
+        <h2>Set Timer Interval</h2>
+        <label for="timerSlider">Timer Interval: <span id="sliderValue">5</span> seconds</label>
+        <input type="range" id="timerSlider" min="0" max="100" value="5">
+        
+        <button id="saveBtn">Save Timer</button> <!-- Removed duplicate button -->
 
-    <script src="settings.js"></script>
+        <script src="settings.js"></script>
+        <a href="popup.html" class="top-right-icon">
+        <img src="Images/home_icon.png"/>
+        </a>
+    </div>
 </body>
 </html>
