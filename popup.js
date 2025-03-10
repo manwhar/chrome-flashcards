@@ -11,9 +11,8 @@ document.getElementById("saveButton").addEventListener("click", function () {
     // Get existing flashcards
     chrome.storage.local.get(["flashcards"], function (result) {
         let flashcards = result.flashcards || {};
-        let newKey = Object.keys(flashcards).length + 1;
-
-        flashcards[newKey] = { front: question, back: answer };
+        
+        flashcards = { front: question, back: answer };
 
         chrome.storage.local.set({ flashcards }, function () {
             document.getElementById("questionInput").value = "";
