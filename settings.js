@@ -17,11 +17,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Save value when button is clicked
-    saveBtn.addEventListener("click", function () {
-        const newInterval = parseInt(slider.value, 10) * 1000; // Convert seconds to ms
-        chrome.storage.sync.set({ timerInterval: newInterval }, function () {
-            alert("Timer updated to " + slider.value + " seconds!");
-            chrome.runtime.sendMessage({ action: "updateTimer" }); // Notify background.js
+    saveBtn.addEventListener("click", () => {
+        const timerInterval = slider.value * 1000; // Convert seconds to milliseconds
+
+        // Save new value to chrome.storage.sync
+        chrome.storage.sync.set({ timerInterval: timerInterval }, function () {
+            console.log("Timer interval saved:", timerInterval);
+
+            // Provide feedback to the user
+            saveBtn.textContent = "Saved!";
+            saveBtn.style.backgroundColor = "#cd1fff"; // Change to a darker shade
+            saveBtn.disabled = true; // Prevent multiple clicks
+
+            setTimeout(() => {
+                saveBtn.textContent = "Save Timer";
+                saveBtn.style.backgroundColor = "#ff98e2"; // Reset color
+                saveBtn.disabled = false;
+            }, 2000); // Reset after 2 seconds
         });
     });
 });
