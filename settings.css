@@ -14,13 +14,12 @@
   
   /* Settings container */
   .settings-container {
-    width: 320px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
     padding: 20px;
-    margin: auto;
-  }
+}
   
   /* Header */
   h1 {
@@ -103,6 +102,10 @@
     background-color: #ff57d0;
   }
 
+  button:active {
+    transform: scale(0.95);
+  }
+
   .top-right-icon {
     position: absolute;
     top: 10px;
@@ -123,13 +126,13 @@
     opacity: 1;
   }
   
-  /* popup container */
-.popup-container {
-    width: 320px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-  }
   
+ /* popup container */
+ .popup-container {
+  width: 320px; /* Keep original size */
+  background: transparent; /* Remove background */
+  border-radius: 0; /* Remove rounded corners */
+  box-shadow: none; /* Remove the shadow */
+  padding: 20px;
+  border: none;
+}
