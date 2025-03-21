@@ -64,15 +64,23 @@ body {
   border-color: #ff98e2;
 }
 
-/* button group styling */
-.button-group {
+/* group dropdown and save button */
+.group-save-container {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }
 
-.button-group button {
-  width: 150px; /* consistent button size */
+.group-save-container select {
+  width: 66%;
+  padding: 10px;
+  border: 2px solid #ff57d0;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.group-save-container button {
+  width: 32%;
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
@@ -81,39 +89,13 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s;
-  margin-right: 10px;
-  white-space: nowrap;      /* prevent text from wrapping */
-  overflow: hidden;         /* hide overflow if text is too long */
-  /* NO dynamic resizing here */
 }
 
-.button-group button:last-child {
-  margin-right: 0;
-}
-
-.button-group button:hover {
+.group-save-container button:hover {
   background-color: #ff57d0;
 }
 
-.group-select {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.group-select button {
-    width: 100px;
-    height: 200px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-right: 10px;
-    /* allow dynamic resizing */
-}
-
-/* flashcard list styling */
+/* flashcad list styling (are we still using this??) */
 #flashcardList {
   margin-top: 15px;
   list-style: none;
@@ -131,60 +113,44 @@ body {
   color: #333;
 }
 
-/* clear all button styling */
-.clear-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px 0;
-  border: none;
-  border-radius: 8px;
-  background-color: #cd1fff;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.clear-button:hover {
-  background-color: #a610e0;
-}
-
+/* top right icon styling */
 .top-right-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .top-right-icon img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .top-right-icon img:hover {
-    opacity: 1;
-  }
-  
-  .second-top-right-icon {
-    position: absolute;
-    top: 45px; /* Adjust this value to position it right below the top-right icon */
-    right: 10px;
-    width: 24px;
-    height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+.top-right-icon img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.top-right-icon img:hover {
+  opacity: 1;
+}
+
+/* second top right icon styling */
+.second-top-right-icon {
+  position: absolute;
+  top: 45px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
 }
 
 .second-top-right-icon img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .second-top-right-icon img:hover {
-    opacity: 1;
+  opacity: 1;
 }

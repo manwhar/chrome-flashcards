@@ -1,72 +1,72 @@
-document.getElementById("saveButton").addEventListener("click", function () {
-    var question = document.getElementById("questionInput").value;
-    var answer = document.getElementById("answerInput").value;
-
-    if (!question || !answer) {
-        alert("Please enter both a question and an answer.");
-        return;
-    }
-    
-
-    // Get existing flashcards
+document.addEventListener("DOMContentLoaded", function () {
+    // populate group dropdown on load.
+    populateGroupDropdown();
+  });
+  
+  function populateGroupDropdown() {
     chrome.storage.local.get(["flashcards"], function (result) {
-        let flashcards = result.flashcards || {};
-        
-        flashcards = { front: question, back: answer };
-
-        chrome.storage.local.set({ flashcards }, function () {
-            document.getElementById("questionInput").value = "";
-            document.getElementById("answerInput").value = "";
+      const flashcards = result.flashcards || {};
+      const groupSelect = document.getElementById("groupSelect");
+      groupSelect.innerHTML = ""; // clear previous options
+  
+      // if no groups exist, add a default group.
+      const groups = Object.keys(flashcards);
+      if (groups.length === 0) {
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "Default";
+        defaultOption.text = "Default";
+        groupSelect.appendChild(defaultOption);
+      } else {
+        groups.forEach(groupName => {
+          const option = document.createElement("option");
+          option.value = groupName;
+          option.text = groupName;
+          groupSelect.appendChild(option);
         });
-        
-    // refresh of flashcards to show new updared one
-    document.getElementById("showButton").click();
+      }
     });
-});
-
-// toggle flashcards event listener (show/ hide button)
-document.getElementById("showButton").addEventListener("click", function () {
-    const flashcardList = document.getElementById("flashcardList");
-    const clearButton = document.getElementById("clearAllButton");
-    const showButton = document.getElementById("showButton");
-    
-    // check if flashcards are already displayed (assuming they're hidden if innerHTML is empty or display is 'none')
-    if (flashcardList.style.display === "block") {
-        // hide the flashcards and update button text
-        flashcardList.style.display = "none";
-        clearButton.style.display = "none";
-        showButton.textContent = "Show Flashcards";
-    } else {
-        // retrieve and display flashcards
-        chrome.storage.local.get(["flashcards"], function (result) {
-            let flashcards = result.flashcards || {};
-            flashcardList.innerHTML = ""; // clear existing list
-            
-            // loop through and display each flashcard
-            Object.keys(flashcards).forEach(key => {
-                let li = document.createElement("li");
-                li.textContent = `Q: ${flashcards[key].front} | A: ${flashcards[key].back}`;
-                
-                // create delete button for each individual flashcard
-                let deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.style.marginLeft = "10px";
-                deleteButton.addEventListener("click", function () {
-                    deleteFlashcard(key);
-                });
-                
-                li.appendChild(deleteButton);
-                flashcardList.appendChild(li);
-            });
-            
-            // display flashcards and update button text to current state
-            flashcardList.style.display = "block";
-            if (Object.keys(flashcards).length > 0) {
-                clearButton.style.display = "block";
-            } else {
-                clearButton.style.display = "none";
-            }
-            showButton.textContent = "Hide Flashcards";
-        });
+  }
+  
+  document.getElementById("saveButton").addEventListener("click", function () {
+    const questionInput = document.getElementById("questionInput");
+    const answerInput = document.getElementById("answerInput");
+    const groupSelect = document.getElementById("groupSelect");
+  
+    const question = questionInput.value.trim();
+    const answer = answerInput.value.trim();
+    const group = groupSelect.value;
+  
+    if (!group) {
+      alert("Please select a group.");
+      return;
     }
-});
+    if (!question || !answer) {
+      alert("Please enter both a question and an answer.");
+      return;
+    }
+  
+    chrome.storage.local.get(["flashcards"], function (result) {
+      let flashcards = result.flashcards || {};
+  
+      // make group if it doesn't exist.
+      if (!flashcards[group]) {
+        flashcards[group] = [];
+      }
+  
+      // add the new flashcard 
+      flashcards[group].push({ front: question, back: answer });
+  
+      chrome.storage.local.set({ flashcards }, function () {
+        if (chrome.runtime.lastError) {
+          console.error("Error saving flashcard:", chrome.runtime.lastError);
+        } else {
+          // CLEAR the input fields after successful save.
+          questionInput.value = "";
+          answerInput.value = "";
+          alert("Flashcard saved to group: " + group);
+          // repopulate dropdown in case new groups were added elsewhere.
+          populateGroupDropdown();
+        }
+      });
+    });
+  });
