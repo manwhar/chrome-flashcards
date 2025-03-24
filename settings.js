@@ -1,39 +1,46 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const slider = document.getElementById("timerSlider");
-    const sliderValue = document.getElementById("sliderValue");
+    const minTimer = document.getElementById("minTimer");
+    const maxTimer = document.getElementById("maxTimer");
+    const minValue = document.getElementById("minValue");
+    const maxValue = document.getElementById("maxValue");
     const saveBtn = document.getElementById("saveBtn");
 
-    // Load saved value from chrome.storage.sync
-    chrome.storage.sync.get("timerInterval", function (data) {
-        if (data.timerInterval !== undefined) {
-            slider.value = data.timerInterval / 1000; // Convert ms to seconds
-            sliderValue.textContent = slider.value;
+    // Load stored values
+    chrome.storage.local.get(["minInterval", "maxInterval"], function (data) {
+        if (data.minInterval !== undefined) {
+            minTimer.value = data.minInterval;
+            minValue.textContent = data.minInterval;
+        }
+        if (data.maxInterval !== undefined) {
+            maxTimer.value = data.maxInterval;
+            maxValue.textContent = data.maxInterval;
         }
     });
 
-    // Update displayed value when slider is moved
-    slider.addEventListener("input", function () {
-        sliderValue.textContent = slider.value;
+    // Update displayed values as sliders change
+    minTimer.addEventListener("input", () => {
+        minValue.textContent = minTimer.value;
+        if (parseInt(minTimer.value) > parseInt(maxTimer.value)) {
+            maxTimer.value = minTimer.value;
+            maxValue.textContent = minTimer.value;
+        }
     });
 
-    // Save value when button is clicked
+    maxTimer.addEventListener("input", () => {
+        maxValue.textContent = maxTimer.value;
+        if (parseInt(maxTimer.value) < parseInt(minTimer.value)) {
+            minTimer.value = maxTimer.value;
+            minValue.textContent = maxTimer.value;
+        }
+    });
+
+    // Save timer range when button is clicked
     saveBtn.addEventListener("click", () => {
-        const timerInterval = slider.value * 1000; // Convert seconds to milliseconds
-
-        // Save new value to chrome.storage.sync
-        chrome.storage.sync.set({ timerInterval: timerInterval }, function () {
-            console.log("Timer interval saved:", timerInterval);
-
-            // Provide feedback to the user
-            saveBtn.textContent = "Saved!";
-            saveBtn.style.backgroundColor = "#cd1fff"; // Change to a darker shade
-            saveBtn.disabled = true; // Prevent multiple clicks
-
-            setTimeout(() => {
-                saveBtn.textContent = "Save Timer";
-                saveBtn.style.backgroundColor = "#ff98e2"; // Reset color
-                saveBtn.disabled = false;
-            }, 2000); // Reset after 2 seconds
+        chrome.storage.local.set({
+            minInterval: parseInt(minTimer.value),
+            maxInterval: parseInt(maxTimer.value)
+        }, () => {
+            alert("Timer range saved!");
         });
     });
 });

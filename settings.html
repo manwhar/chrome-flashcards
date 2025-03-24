@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="settings.css"> <!-- Link CSS for styling -->
+    <link rel="stylesheet" href="settings.css">
 </head>
 <body>
-    <div class="popup-container">
+    <div class="settings-container">
         <h1>Settings</h1>
+        <h2>Set Timer Interval Range (seconds)</h2>
 
-        <h2>Set Timer Interval</h2>
-        <label for="timerSlider">Timer Interval: <span id="sliderValue">5</span> seconds</label>
-        <input type="range" id="timerSlider" min="0" max="100" value="5">
-        
-        <button id="saveBtn">Save Timer</button> <!-- Removed duplicate button -->
+        <label for="minTimer">Min Interval: <span id="minValue">5</span> sec</label>
+        <input type="range" id="minTimer" min="0" max="100" value="5">
 
-        <script src="settings.js"></script>
-        <a href="popup.html" class="top-right-icon">
-        <img src="Images/home_icon.png"/>
-        </a>
-        <script src="navigation.js"></script>
+        <label for="maxTimer">Max Interval: <span id="maxValue">10</span> sec</label>
+        <input type="range" id="maxTimer" min="0" max="100" value="10">
+
+        <button id="saveBtn">Save Timer Range</button>
     </div>
+
+    <script src="settings.js"></script>
 </body>
 </html>

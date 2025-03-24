@@ -15,10 +15,34 @@ function injectBox() {
 let intervalTime = 5000; // Default time
 let intervalId;
 
-function startTimer() {
-    if (intervalId) clearInterval(intervalId);
-    intervalId = setInterval(injectBox, intervalTime);
+// function startTimer() {
+//     if (intervalId) clearInterval(intervalId);
+//     intervalId = setInterval(injectBox, intervalTime);
+// }
+// Function to inject flashcard at random intervals
+function startRandomInterval() {
+    chrome.storage.local.get(["minInterval", "maxInterval"], function (data) {
+        let minTime = data.minInterval || 5;
+        let maxTime = data.maxInterval || 10;
+
+        function scheduleNextInjection() {
+            let randomTime = Math.floor(Math.random() * (maxTime - minTime + 1) + minTime) * 1000;
+            setTimeout(() => {
+                injectBox();
+                scheduleNextInjection();
+            }, randomTime);
+        }
+
+        scheduleNextInjection();
+    });
 }
+
+startRandomInterval();
+
+
+// Start the flashcard injection loop
+startRandomInterval();
+
 
 // Load timer from storage
 chrome.storage.sync.get("timerInterval", function (data) {
