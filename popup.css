@@ -64,23 +64,15 @@ body {
   border-color: #ff98e2;
 }
 
-/* group dropdown and save button */
-.group-save-container {
+/* button group styling */
+.button-group {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }
 
-.group-save-container select {
-  width: 66%;
-  padding: 10px;
-  border: 2px solid #ff57d0;
-  border-radius: 8px;
-  font-family: inherit;
-}
-
-.group-save-container button {
-  width: 32%;
+.button-group button {
+  width: 150px; /* consistent button size */
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
@@ -89,13 +81,58 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s;
+  margin-right: 10px;
+  white-space: nowrap;      /* prevent text from wrapping */
+  overflow: hidden;         /* hide overflow if text is too long */
+  /* NO dynamic resizing here */
 }
 
-.group-save-container button:hover {
+.button-group button:last-child {
+  margin-right: 0;
+}
+
+.button-group button:hover {
   background-color: #ff57d0;
 }
 
 /* flashcad list styling (are we still using this??) */
+.group-select {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.group-select button {
+    width: 83px;
+    height: 175px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-right: 10px;
+    /* allow dynamic resizing */
+}
+
+.group-item:hover {
+  background-color: #a610e0
+}
+
+.group-title {
+  font-size: 18px;
+  vertical-align: top;
+  margin-bottom: 5px;
+}
+
+.group-content {
+  font-size: 10px;
+  color: #484848;
+
+}
+
+
+
+/* flashcard list styling */
 #flashcardList {
   margin-top: 15px;
   list-style: none;
@@ -113,44 +150,60 @@ body {
   color: #333;
 }
 
-/* top right icon styling */
-.top-right-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-}
-
-.top-right-icon img {
+/* clear all button styling */
+.clear-button {
   width: 100%;
-  height: auto;
+  margin-top: 10px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #cd1fff;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease-in-out;
+  transition: background 0.3s;
 }
 
-.top-right-icon img:hover {
-  opacity: 1;
+.clear-button:hover {
+  background-color: #a610e0;
 }
 
-/* second top right icon styling */
-.second-top-right-icon {
-  position: absolute;
-  top: 45px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
+.top-right-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .top-right-icon img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .top-right-icon img:hover {
+    opacity: 1;
+  }
+  
+  .second-top-right-icon {
+    position: absolute;
+    top: 45px; /* Adjust this value to position it right below the top-right icon */
+    right: 10px;
+    width: 24px;
+    height: 24px;
 }
 
 .second-top-right-icon img {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease-in-out;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .second-top-right-icon img:hover {
-  opacity: 1;
+    opacity: 1;
 }
