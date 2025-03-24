@@ -95,47 +95,7 @@ body {
   background-color: #ff57d0;
 }
 
-<<<<<<< Updated upstream
 /* flashcad list styling (are we still using this??) */
-=======
-.group-select {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.group-select button {
-    width: 83px;
-    height: 175px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-right: 10px;
-    /* allow dynamic resizing */
-}
-
-.group-item:hover {
-  background-color: #a610e0
-}
-
-.group-title {
-  font-size: 18px;
-  vertical-align: top;
-  margin-bottom: 5px;
-}
-
-.group-content {
-  font-size: 10px;
-  color: #484848;
-
-}
-
-
-
-/* flashcard list styling */
->>>>>>> Stashed changes
 #flashcardList {
   margin-top: 15px;
   list-style: none;
