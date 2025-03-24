@@ -95,6 +95,39 @@ body {
   background-color: #ff57d0;
 }
 
+/*group save styling stuff*/
+/* New container for group dropdown and save button */
+.group-save-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.group-save-container select {
+  width: 66%;
+  padding: 10px;
+  border: 2px solid #ff57d0;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.group-save-container button {
+  width: 32%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff98e2;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.group-save-container button:hover {
+  background-color: #ff57d0;
+}
+
+
 /* flashcad list styling (are we still using this??) */
 .group-select {
     margin-top: 15px;
