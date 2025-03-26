@@ -40,7 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
             minInterval: parseInt(minTimer.value),
             maxInterval: parseInt(maxTimer.value)
         }, () => {
-            alert("Timer range saved!");
+            // Change button text and color
+            saveBtn.textContent = "Saved!";
+            saveBtn.style.backgroundColor = "#cd1fff"; 
+
+            // Revert button after 3 seconds
+            setTimeout(() => {
+                saveBtn.textContent = "Save Timer Range";
+                saveBtn.style.backgroundColor = ""; // Revert to default
+            }, 1750);
         });
     });
 });
