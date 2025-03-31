@@ -9,6 +9,11 @@
   text-align: center;
 }
 
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
 /* Headings */
 h1 {
   font-size: 24px;
