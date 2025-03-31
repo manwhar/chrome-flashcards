@@ -4,26 +4,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Groups</title>
-  <!-- i used poppins font from google -->
+  <!-- Include Poppins font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Base styles from popup.css -->
   <link rel="stylesheet" href="popup.css" />
+  <style>
+    /* === Groups Page Specific Styles === */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .title {
+      font-size: 22px;
+      color: #cd1fff;
+      flex: 1;
+      text-align: left;
+    }
+    /* Use grid layout so group cards stack side by side */
+    #groupCards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .group-card {
+      background: #f9f9f9;
+      border: 1px solid #ff57d0;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .group-card.selected {
+      /* Background remains as set in JS when selected */
+    }
+    .group-title {
+      font-size: 16px;
+      color: #cd1fff;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .flashcards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .flashcard-item {
+      display: flex;
+      border: 1px solid #ff98e2;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .flashcard-front,
+    .flashcard-back {
+      width: 50%;
+      padding: 4px;
+      font-size: 12px;
+      color: #333;
+      text-align: center;
+    }
+    .flashcard-front {
+      border-right: 1px solid #ccc; /* Thin divider */
+    }
+    .no-flashcards {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+    /* New Group Form styling */
+    #newGroupForm {
+      margin-top: 15px;
+      display: none;
+    }
+    #newGroupForm input[type="text"],
+    #newGroupForm input[type="color"],
+    #newGroupForm button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 2px solid #ff57d0;
+      border-radius: 8px;
+      font-family: inherit;
+      transition: border 0.3s;
+    }
+    #newGroupForm button {
+      background-color: #ff98e2;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #newGroupForm button:hover {
+      background-color: #ff57d0;
+    }
+    /* Add a label for the color input */
+    #newGroupForm label.color-label {
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+    /* Style the color input to look like a box */
+    #newGroupForm input[type="color"] {
+      -webkit-appearance: none;
+      border: 2px solid #ff57d0;
+      border-radius: 8px;
+      height: 40px;
+      width: 100%;
+      padding: 0;
+      cursor: pointer;
+    }
+    #newGroupForm input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+      border-radius: 8px;
+    }
+    #newGroupForm input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div class="popup-container">
-      <div class="header">
-        <img src="images/ChromeIcon.png" alt="Logo" class="logo" />
-        <h2 class="title">Groups</h2>
+  <div class="popup-container">
+    <div class="header">
+      <!-- Main icon (ChromeIcon.png) on top left -->
+      <img src="images/ChromeIcon.png" alt="Logo" class="logo" id="homeLogo" />
+      <!-- Title "Groups" left-aligned -->
+      <div class="title">Groups</div>
+      <!-- Add Group icon on right -->
+      <div class="icon-container">
+        <img src="images/addGroup.png" alt="Add Group" id="addGroupIcon" class="nav-icon" />
       </div>
-      <div class="content">
-        <div class="group-select">
-          <ul id="groupList">
-            <!-- <button>Test Group</button> -->
-          </ul>
-        </div>
-      </div>
-    <script src="groups.js"></script>
-    <script src="navigation.js"></script>
-  </body>
-  </html>
-  
-  
+    </div>
+    <!-- Container for group cards -->
+    <div id="groupCards">
+      <!-- Group cards will be rendered here by groups.js -->
+    </div>
+    <!-- New Group Form -->
+    <div id="newGroupForm">
+      <input type="text" id="newGroupName" placeholder="Group Name" />
+      <label for="newGroupColor" class="color-label">Group Color</label>
+      <input type="color" id="newGroupColor" value="#ff57d0" />
+      <button id="saveGroupBtn">Save Group</button>
+    </div>
+  </div>
+  <script src="groups.js"></script>
+  <script src="navigation.js"></script>
+</body>
+</html>

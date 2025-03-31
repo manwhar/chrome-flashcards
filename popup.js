@@ -1,72 +1,63 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // populate group dropdown on load.
-    populateGroupDropdown();
-  });
-  
+// popup.js - Handles adding new flashcards and populating the group dropdown.
+
+document.addEventListener("DOMContentLoaded", function() {
+  const groupDropdown = document.getElementById("groupDropdown");
+  const saveFlashcardBtn = document.getElementById("saveFlashcardBtn");
+  const frontInput = document.getElementById("frontInput");
+  const backInput = document.getElementById("backInput");
+
+  // Populate the dropdown with available groups.
   function populateGroupDropdown() {
-    chrome.storage.local.get(["flashcards"], function (result) {
-      const flashcards = result.flashcards || {};
-      const groupSelect = document.getElementById("groupSelect");
-      groupSelect.innerHTML = ""; // clear previous options
-  
-      // if no groups exist, add a default group.
-      const groups = Object.keys(flashcards);
-      if (groups.length === 0) {
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "Default";
-        defaultOption.text = "Default";
-        groupSelect.appendChild(defaultOption);
+    chrome.storage.local.get(["groups"], function(data) {
+      const groups = data.groups || {};
+      groupDropdown.innerHTML = "";
+      // If no groups exist, show "Uncategorized".
+      if (Object.keys(groups).length === 0) {
+        const option = document.createElement("option");
+        option.value = "Uncategorized";
+        option.text = "Uncategorized";
+        groupDropdown.appendChild(option);
       } else {
-        groups.forEach(groupName => {
+        for (let groupName in groups) {
           const option = document.createElement("option");
           option.value = groupName;
           option.text = groupName;
-          groupSelect.appendChild(option);
-        });
+          groupDropdown.appendChild(option);
+        }
       }
     });
   }
-  
-  document.getElementById("saveButton").addEventListener("click", function () {
-    const questionInput = document.getElementById("questionInput");
-    const answerInput = document.getElementById("answerInput");
-    const groupSelect = document.getElementById("groupSelect");
-  
-    const question = questionInput.value.trim();
-    const answer = answerInput.value.trim();
-    const group = groupSelect.value;
-  
-    if (!group) {
-      alert("Please select a group.");
+
+  populateGroupDropdown();
+
+  // Save flashcard to the selected group.
+  saveFlashcardBtn.addEventListener("click", function() {
+    const frontText = frontInput.value.trim();
+    const backText = backInput.value.trim();
+    const selectedGroup = groupDropdown.value;
+
+    if (!frontText || !backText) {
+      alert("Please enter both front and back text for the flashcard.");
       return;
     }
-    if (!question || !answer) {
-      alert("Please enter both a question and an answer.");
-      return;
-    }
-  
-    chrome.storage.local.get(["flashcards"], function (result) {
-      let flashcards = result.flashcards || {};
-  
-      // make group if it doesn't exist.
-      if (!flashcards[group]) {
-        flashcards[group] = [];
+
+    chrome.storage.local.get(["groups"], function(data) {
+      const groups = data.groups || {};
+      // If the selected group does not exist (for example, "Uncategorized"), create it.
+      if (!groups[selectedGroup]) {
+        groups[selectedGroup] = { flashcards: [], color: "#cccccc" }; // Default color.
       }
-  
-      // add the new flashcard 
-      flashcards[group].push({ front: question, back: answer });
-  
-      chrome.storage.local.set({ flashcards }, function () {
-        if (chrome.runtime.lastError) {
-          console.error("Error saving flashcard:", chrome.runtime.lastError);
-        } else {
-          // CLEAR the input fields after successful save.
-          questionInput.value = "";
-          answerInput.value = "";
-          alert("Flashcard saved to group: " + group);
-          // repopulate dropdown in case new groups were added elsewhere.
-          populateGroupDropdown();
-        }
+      const newFlashcard = {
+        front: frontText,
+        back: backText,
+        correctCount: 0
+      };
+      groups[selectedGroup].flashcards.push(newFlashcard);
+      chrome.storage.local.set({ groups: groups }, function() {
+        alert("Flashcard saved successfully!");
+        frontInput.value = "";
+        backInput.value = "";
       });
     });
   });
+});

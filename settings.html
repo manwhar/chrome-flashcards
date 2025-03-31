@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Settings</title>
-  <!-- i used poppins font from google -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="settings.css" />
 </head>
 <body>
-    <div class="settings-container">
-      <<div class="header">
-        <img src="images/ChromeIcon.png" alt="Logo" class="logo" />
-        <h2 class="title">Settings</h2>
-        <h2>Set Timer Interval Range (seconds)</h2>
-
-        <label for="minTimer">Min Interval: <span id="minValue">5</span> sec</label>
-        <input type="range" id="minTimer" min="0" max="100" value="5">
-
-        <label for="maxTimer">Max Interval: <span id="maxValue">10</span> sec</label>
-        <input type="range" id="maxTimer" min="0" max="100" value="10">
-
-        <button id="saveBtn">Save Timer Range</button>
+  <div class="settings-container">
+    <div class="header">
+      <!-- Home icon (small) to navigate back to main page -->
+      <div class="icon-container">
+         <img src="images/home.png" alt="Home" id="homeIcon" class="nav-icon">
+      </div>
+      <h2 class="title">Settings</h2>
     </div>
-
-    <script src="settings.js"></script>
+    <h2>Set Timer Interval Range (seconds)</h2>
+    <label for="minTimer">Min Interval: <span id="minValue">5</span> sec</label>
+    <input type="range" id="minTimer" min="0" max="100" value="5">
+    <label for="maxTimer">Max Interval: <span id="maxValue">10</span> sec</label>
+    <input type="range" id="maxTimer" min="0" max="100" value="10">
+    <button id="saveBtn">Save Timer Range</button>
+  </div>
+  <script src="settings.js"></script>
+  <script src="navigation.js"></script>
 </body>
 </html>

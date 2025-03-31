@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flashcard Saver</title>
-  <!-- i used poppins font from google -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="popup.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="popup-container">
     <div class="header">
-      <img src="images/ChromeIcon.png" alt="Logo" class="logo" />
-      <h2 class="title">Flashcards</h2>
+      <!-- Left: Logo -->
+      <img src="images/ChromeIcon.png" alt="Logo" class="logo">
+      <!-- Middle: Title -->
+      <div class="title">Flashcards</div>
+      <!-- Right: Two icons for navigation -->
+      <div class="icon-container">
+         <img src="images/addGroup.png" alt="Add Group" id="addGroupIcon" class="nav-icon">
+         <img src="images/settings_icon.png" alt="Settings" id="settingsIcon" class="nav-icon">
+      </div>
     </div>
     <div class="content">
-      <a href="groups.html" class="top-right-icon">
-        <img src="images/addGroup.png" alt="Add Group" />
-      </a>
-      <a href="settings.html" class="second-top-right-icon">
-        <img src="Images/settings_icon.png"/>
-      </a>
-      <h3>Add a Flashcard</h3>
-      <label for="questionInput">Question:</label>
-      <input type="text" id="questionInput" placeholder="Enter your question" />
-
-      <label for="answerInput">Answer:</label>
-      <input type="text" id="answerInput" placeholder="Enter your answer" />
-
+      <input type="text" id="frontInput" placeholder="Front Text">
+      <input type="text" id="backInput" placeholder="Back Text">
       <div class="group-save-container">
-        <select id="groupSelect">
-          <!-- the save group buttons will be from popup.js -->
+        <select id="groupDropdown">
+          <!-- Options populated by popup.js -->
         </select>
-        <button id="saveButton">Save</button>
+        <button id="saveFlashcardBtn">Save</button>
       </div>
-
     </div>
   </div>
   <script src="popup.js"></script>
   <script src="navigation.js"></script>
 </body>
 </html>
+

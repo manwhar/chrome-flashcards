@@ -19,10 +19,11 @@ body {
   padding: 20px;
 }
 
-/* header with the logo and title */
+/* header with the logo, title, and icons */
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Distributes items to the edges */
   margin-bottom: 15px;
 }
 
@@ -35,6 +36,21 @@ body {
 .title {
   font-size: 22px;
   color: #cd1fff;
+}
+
+/* Icon container for header icons */
+.icon-container {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+/* Adjust nav-icon size and spacing */
+.nav-icon {
+  width: 30px;      /* Increased size for better visibility */
+  height: 32px;
+  cursor: pointer;
+  margin-left: 2px; /* Reduced margin for closer icons */
 }
 
 /* content styling */
@@ -58,6 +74,7 @@ body {
   border-radius: 8px;
   outline: none;
   transition: border 0.3s;
+  margin-bottom: 15px; /* Spacing between text boxes */
 }
 
 .content input[type="text"]:focus {
@@ -82,9 +99,8 @@ body {
   cursor: pointer;
   transition: background 0.3s;
   margin-right: 10px;
-  white-space: nowrap;      /* prevent text from wrapping */
-  overflow: hidden;         /* hide overflow if text is too long */
-  /* NO dynamic resizing here */
+  white-space: nowrap; /* prevent text from wrapping */
+  overflow: hidden;    /* hide overflow if text is too long */
 }
 
 .button-group button:last-child {
@@ -95,10 +111,9 @@ body {
   background-color: #ff57d0;
 }
 
-/*group save styling stuff*/
-/* New container for group dropdown and save button */
+/* Group save container styling */
 .group-save-container {
-  margin-top: 15px;
+  margin-top: 2px;  /* Reduced margin-top to bring it closer to the back text input */
   display: flex;
   justify-content: space-between;
 }
@@ -127,45 +142,7 @@ body {
   background-color: #ff57d0;
 }
 
-
-/* flashcad list styling (are we still using this??) */
-.group-select {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.group-select button {
-    width: 83px;
-    height: 175px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-right: 10px;
-    /* allow dynamic resizing */
-}
-
-.group-item:hover {
-  background-color: #a610e0
-}
-
-.group-title {
-  font-size: 18px;
-  vertical-align: top;
-  margin-bottom: 5px;
-}
-
-.group-content {
-  font-size: 10px;
-  color: #484848;
-
-}
-
-
-
-/* flashcard list styling */
+/* Flashcard list styling */
 #flashcardList {
   margin-top: 15px;
   list-style: none;
@@ -183,7 +160,7 @@ body {
   color: #333;
 }
 
-/* clear all button styling */
+/* Clear all button styling */
 .clear-button {
   width: 100%;
   margin-top: 10px;
@@ -201,42 +178,88 @@ body {
   background-color: #a610e0;
 }
 
+/* Top-right icon styling */
 .top-right-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-  }
-  
-  .top-right-icon img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .top-right-icon img:hover {
-    opacity: 1;
-  }
-  
-  .second-top-right-icon {
-    position: absolute;
-    top: 45px; /* Adjust this value to position it right below the top-right icon */
-    right: 10px;
-    width: 24px;
-    height: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+.top-right-icon img {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.top-right-icon img:hover {
+  opacity: 1;
+}
+
+.second-top-right-icon {
+  position: absolute;
+  top: 45px; /* Adjust this value to position it right below the top-right icon */
+  right: 10px;
+  width: 24px;
+  height: 24px;
 }
 
 .second-top-right-icon img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .second-top-right-icon img:hover {
-    opacity: 1;
+  opacity: 1;
+}
+
+/* === Groups Tab Specific Styles === */
+
+.group-card {
+  background: #f9f9f9;
+  border: 1px solid #ff57d0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.group-title {
+  font-size: 18px;
+  color: #cd1fff;
+  margin-bottom: 10px;
+}
+
+.flashcards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flashcard-item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ff98e2;
+  border-radius: 6px;
+  padding: 8px;
+  background: #fff;
+}
+
+.flashcard-front,
+.flashcard-back {
+  width: 48%;
+  font-size: 14px;
+  color: #333;
+  word-wrap: break-word;
+}
+
+.no-flashcards {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
 }
