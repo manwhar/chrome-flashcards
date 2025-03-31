@@ -1,97 +1,124 @@
-// explicitly defined flashcards
-// once this structure is moved to localstorage, pull from there
-const flashcards = {
-    "MATH": {
-        "flashcards": [
-            { "back": "y=mx+b", "front": "point-slope form" },
-            { "back": "9+10", "front": "21" },
-            { "back": "x^2 + y^2 = z^2", "front": "pythagorean theorem" },
-            { "back": "circumference of a circle", "front": "2(pi)r" },
-            { "back": "area of a circle", "front": "pi(r)^2" }
-        ],
-        "color": "#de665d"
-    },
+// groups.js - Renders groups as styled cards with mini flashcard boxes
 
-    "SCIENCE": {
-        "flashcards": [
-            { "back": "the powerhouse of the cell", "front": "mitochondria" },
-            { "back": "formula for angular velocity", "front": "(1/2)mv^2" },
-            { "back": "what should we always ignore", "front": "air resistance" }
-        ],
-        "color": "#5dde7f"
-    },
+document.addEventListener("DOMContentLoaded", function() {
+  const groupCards = document.getElementById("groupCards");
+  const addGroupIcon = document.getElementById("addGroupIcon");
+  const newGroupForm = document.getElementById("newGroupForm");
+  const saveGroupBtn = document.getElementById("saveGroupBtn");
+  const newGroupNameInput = document.getElementById("newGroupName");
+  const newGroupColorInput = document.getElementById("newGroupColor");
 
-    "HISTORY": {
-        "flashcards": [
-            { "back": "who was the first president", "front": "george washington" },
-            { "back": "who wasn't the first president", "front": "katie kubota" },
-            { "back": "idk more history but what is the meaning of life", "front": "42" },
-        ],
-        "color": "#de57d5"
+  // Toggle new group form when the Add Group icon is clicked
+  addGroupIcon.addEventListener("click", function() {
+    if (newGroupForm.style.display === "none" || newGroupForm.style.display === "") {
+      newGroupForm.style.display = "block";
+      newGroupNameInput.focus();
+    } else {
+      newGroupForm.style.display = "none";
     }
-}
+  });
 
-function adjustOpacity(hex, opacity) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
+  // Function to load groups and render them as cards
+  function loadGroups() {
+    chrome.storage.local.get(["groups"], function(data) {
+      const groups = data.groups || {};
+      groupCards.innerHTML = "";
 
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
-
-// if u want to have something selected by default add it in the list here
-let selectedGroups = []; 
-
-Object.keys(flashcards).forEach((key, index) => {
-    let group = document.createElement("button");
-    group.classList.add("group-item");
-
-    let title = document.createElement("div");
-    title.classList.add("group-title");
-    title.innerText = key;
-
-    let content = document.createElement("div");
-    content.classList.add("group-content");
-
-    // create inner text displaying flashcards
-    
-    content.innerText = flashcards[key]["flashcards"][0]['back'];
-
-    const customClass = `group-item-${index}`;
-    group.classList.add(customClass);
-
-    const vibrantColor = flashcards[key].color;
-    const fadedColor = adjustOpacity(vibrantColor, 0.4); // Light version
-
-    // Inject styles for hover and selected
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .${customClass}:hover:not(.selected) {
-        background-color: ${fadedColor} !important;
+      if (Object.keys(groups).length === 0) {
+        groupCards.innerHTML = "<p style='text-align:center; color:#333;'>No groups created.</p>";
+        return;
       }
-      .${customClass}.selected {
-        background-color: ${vibrantColor} !important;
-      }
-    `;
-    document.head.appendChild(style);
 
-    // Click handler → toggle selected
-    group.addEventListener('click', () => {
-        const isSelected = group.classList.contains('selected');
-        group.classList.toggle('selected');
+      Object.keys(groups).forEach(groupName => {
+        const groupData = groups[groupName];
 
-        if (isSelected) {
-            // Remove from selected list
-            selectedGroups = selectedGroups.filter(g => g !== key);
+        // Create group card container
+        const card = document.createElement("div");
+        card.className = "group-card";
+        card.style.background = "#f9f9f9";
+
+        // On hover, change background to group's assigned color
+        card.addEventListener("mouseover", function() {
+          card.style.background = groupData.color;
+        });
+        // On mouseout, revert background if not selected
+        card.addEventListener("mouseout", function() {
+          if (!card.classList.contains("selected")) {
+            card.style.background = "#f9f9f9";
+          }
+        });
+        // On click, toggle selection so the background remains the group's color
+        card.addEventListener("click", function() {
+          card.classList.toggle("selected");
+          if (card.classList.contains("selected")) {
+            card.style.background = groupData.color;
+          } else {
+            card.style.background = "#f9f9f9";
+          }
+        });
+
+        // Group title
+        const title = document.createElement("div");
+        title.className = "group-title";
+        title.innerText = groupName;
+        card.appendChild(title);
+
+        // Container for flashcards in this group
+        const flashcardsContainer = document.createElement("div");
+        flashcardsContainer.className = "flashcards-container";
+
+        if (groupData.flashcards && groupData.flashcards.length > 0) {
+          groupData.flashcards.forEach(flashcard => {
+            const flashcardItem = document.createElement("div");
+            flashcardItem.className = "flashcard-item";
+
+            const frontDiv = document.createElement("div");
+            frontDiv.className = "flashcard-front";
+            frontDiv.innerText = flashcard.front;
+
+            const backDiv = document.createElement("div");
+            backDiv.className = "flashcard-back";
+            backDiv.innerText = flashcard.back;
+
+            flashcardItem.appendChild(frontDiv);
+            flashcardItem.appendChild(backDiv);
+            flashcardsContainer.appendChild(flashcardItem);
+          });
         } else {
-            // Add to selected list
-            selectedGroups.push(key);
+          const noFlashcards = document.createElement("div");
+          noFlashcards.className = "no-flashcards";
+          noFlashcards.innerText = "No flashcards.";
+          flashcardsContainer.appendChild(noFlashcards);
         }
 
-        console.log('Selected groups:', selectedGroups);
+        card.appendChild(flashcardsContainer);
+        groupCards.appendChild(card);
+      });
     });
+  }
 
-    group.appendChild(title);
-    group.appendChild(content);
-    groupList.appendChild(group);
+  loadGroups();
+
+  // Save new group functionality
+  saveGroupBtn.addEventListener("click", function() {
+    const groupName = newGroupNameInput.value.trim();
+    const groupColor = newGroupColorInput.value;
+    if (!groupName) {
+      alert("Please enter a valid group name.");
+      return;
+    }
+    chrome.storage.local.get(["groups"], function(data) {
+      const groups = data.groups || {};
+      if (groups[groupName]) {
+        alert("Group already exists.");
+        return;
+      }
+      groups[groupName] = { flashcards: [], color: groupColor };
+      chrome.storage.local.set({ groups: groups }, function() {
+        loadGroups();
+        newGroupNameInput.value = "";
+        newGroupForm.style.display = "none";
+      });
+    });
+  });
 });
