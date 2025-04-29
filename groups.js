@@ -1,4 +1,4 @@
-// groups.js - Renders groups as styled cards with mini flashcard boxes
+// groups.js - Renders groups as styled cards with tiny delete buttons
 
 document.addEventListener("DOMContentLoaded", function() {
   const groupCards = document.getElementById("groupCards");
@@ -8,90 +8,118 @@ document.addEventListener("DOMContentLoaded", function() {
   const newGroupNameInput = document.getElementById("newGroupName");
   const newGroupColorInput = document.getElementById("newGroupColor");
 
-  // Toggle new group form when the Add Group icon is clicked
-  addGroupIcon.addEventListener("click", function() {
-    if (newGroupForm.style.display === "none" || newGroupForm.style.display === "") {
-      newGroupForm.style.display = "block";
-      newGroupNameInput.focus();
-    } else {
-      newGroupForm.style.display = "none";
-    }
+  // Toggle new group form
+  addGroupIcon.addEventListener("click", () => {
+    newGroupForm.style.display = newGroupForm.style.display === "block" ? "none" : "block";
+    if (newGroupForm.style.display === "block") newGroupNameInput.focus();
   });
 
-  // Function to load groups and render them as cards
+  // Load and render all groups
   function loadGroups() {
-    chrome.storage.local.get(["groups"], function(data) {
-      const groups = data.groups || {};
+    chrome.storage.local.get(["groups"], ({ groups = {} }) => {
       groupCards.innerHTML = "";
-
       if (Object.keys(groups).length === 0) {
         groupCards.innerHTML = "<p style='text-align:center; color:#333;'>No groups created.</p>";
         return;
       }
 
-      Object.keys(groups).forEach(groupName => {
-        const groupData = groups[groupName];
-
-        // Create group card container
+      Object.entries(groups).forEach(([groupName, groupData]) => {
+        // Card container
         const card = document.createElement("div");
         card.className = "group-card";
         card.style.background = "#f9f9f9";
+        card.style.position = "relative";
 
-        // On hover, change background to group's assigned color
-        card.addEventListener("mouseover", function() {
-          card.style.background = groupData.color;
+        // Hover & select behavior
+        card.addEventListener("mouseover", () => card.style.background = groupData.color);
+        card.addEventListener("mouseout", () => {
+          if (!card.classList.contains("selected")) card.style.background = "#f9f9f9";
         });
-        // On mouseout, revert background if not selected
-        card.addEventListener("mouseout", function() {
-          if (!card.classList.contains("selected")) {
-            card.style.background = "#f9f9f9";
-          }
-        });
-        // On click, toggle selection so the background remains the group's color
-        card.addEventListener("click", function() {
+        card.addEventListener("click", () => {
           card.classList.toggle("selected");
-          if (card.classList.contains("selected")) {
-            card.style.background = groupData.color;
-          } else {
-            card.style.background = "#f9f9f9";
-          }
+          card.style.background = card.classList.contains("selected") ? groupData.color : "#f9f9f9";
         });
 
-        // Group title
+        // Title
         const title = document.createElement("div");
         title.className = "group-title";
         title.innerText = groupName;
         card.appendChild(title);
 
-        // Container for flashcards in this group
-        const flashcardsContainer = document.createElement("div");
-        flashcardsContainer.className = "flashcards-container";
+        // Delete-group icon
+        const deleteGroup = document.createElement("img");
+        deleteGroup.src = "Images/deleteIcon.png";
+        deleteGroup.className = "delete-group-icon";
+        Object.assign(deleteGroup.style, {
+          position: "absolute",
+          top: "8px",
+          right: "8px",
+          width: "20px",
+          height: "20px",
+          cursor: "pointer"
+        });
+        deleteGroup.addEventListener("click", e => {
+          e.stopPropagation();
+          if (confirm(`Delete group “${groupName}” and all its cards?`)) {
+            chrome.storage.local.get(["groups"], ({ groups = {} }) => {
+              delete groups[groupName];
+              chrome.storage.local.set({ groups }, loadGroups);
+            });
+          }
+        });
+        card.appendChild(deleteGroup);
 
-        if (groupData.flashcards && groupData.flashcards.length > 0) {
-          groupData.flashcards.forEach(flashcard => {
-            const flashcardItem = document.createElement("div");
-            flashcardItem.className = "flashcard-item";
+        // Flashcards container
+        const fcContainer = document.createElement("div");
+        fcContainer.className = "flashcards-container";
 
-            const frontDiv = document.createElement("div");
-            frontDiv.className = "flashcard-front";
-            frontDiv.innerText = flashcard.front;
+        if (groupData.flashcards?.length > 0) {
+          groupData.flashcards.forEach((flashcard, idx) => {
+            const item = document.createElement("div");
+            item.className = "flashcard-item";
+            item.style.position = "relative";
 
-            const backDiv = document.createElement("div");
-            backDiv.className = "flashcard-back";
-            backDiv.innerText = flashcard.back;
+            const front = document.createElement("div");
+            front.className = "flashcard-front";
+            front.innerText = flashcard.front;
 
-            flashcardItem.appendChild(frontDiv);
-            flashcardItem.appendChild(backDiv);
-            flashcardsContainer.appendChild(flashcardItem);
+            const back = document.createElement("div");
+            back.className = "flashcard-back";
+            back.innerText = flashcard.back;
+
+            // Delete-flashcard icon
+            const deleteFlash = document.createElement("img");
+            deleteFlash.src = "Images/deleteIcon.png";
+            deleteFlash.className = "delete-flashcard-icon";
+            Object.assign(deleteFlash.style, {
+              position: "absolute",
+              top: "4px",
+              right: "4px",
+              width: "16px",
+              height: "16px",
+              cursor: "pointer"
+            });
+            deleteFlash.addEventListener("click", e => {
+              e.stopPropagation();
+              if (confirm("Delete this flashcard?")) {
+                chrome.storage.local.get(["groups"], ({ groups = {} }) => {
+                  groups[groupName].flashcards.splice(idx, 1);
+                  chrome.storage.local.set({ groups }, loadGroups);
+                });
+              }
+            });
+
+            item.append(front, back, deleteFlash);
+            fcContainer.appendChild(item);
           });
         } else {
-          const noFlashcards = document.createElement("div");
-          noFlashcards.className = "no-flashcards";
-          noFlashcards.innerText = "No flashcards.";
-          flashcardsContainer.appendChild(noFlashcards);
+          const none = document.createElement("div");
+          none.className = "no-flashcards";
+          none.innerText = "No flashcards.";
+          fcContainer.appendChild(none);
         }
 
-        card.appendChild(flashcardsContainer);
+        card.appendChild(fcContainer);
         groupCards.appendChild(card);
       });
     });
@@ -99,22 +127,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
   loadGroups();
 
-  // Save new group functionality
-  saveGroupBtn.addEventListener("click", function() {
-    const groupName = newGroupNameInput.value.trim();
-    const groupColor = newGroupColorInput.value;
-    if (!groupName) {
-      alert("Please enter a valid group name.");
-      return;
-    }
-    chrome.storage.local.get(["groups"], function(data) {
-      const groups = data.groups || {};
-      if (groups[groupName]) {
-        alert("Group already exists.");
-        return;
-      }
-      groups[groupName] = { flashcards: [], color: groupColor };
-      chrome.storage.local.set({ groups: groups }, function() {
+  // Save new group
+  saveGroupBtn.addEventListener("click", () => {
+    const name = newGroupNameInput.value.trim();
+    const color = newGroupColorInput.value;
+    if (!name) return alert("Please enter a valid group name.");
+    chrome.storage.local.get(["groups"], ({ groups = {} }) => {
+      if (groups[name]) return alert("Group already exists.");
+      groups[name] = { flashcards: [], color };
+      chrome.storage.local.set({ groups }, () => {
         loadGroups();
         newGroupNameInput.value = "";
         newGroupForm.style.display = "none";
