@@ -112,19 +112,23 @@ function createOrRemoveBox() {
     const groups = result.groups || {};
     let allFlashcards = [];
 
-    Object.keys(groups).forEach((groupName) => {
-      const group = groups[groupName];
+    Object.entries(groups).forEach(([groupName, group]) => {
+      // Skip any group with enabled === false
+      if (group.enabled === false) return;
+
       if (group.flashcards && group.flashcards.length > 0) {
         group.flashcards.forEach((flashcard) => {
-          flashcard.group = groupName;
-          flashcard.groupColor = group.color;
-          allFlashcards.push(flashcard);
+          allFlashcards.push({
+            ...flashcard,
+            group: groupName,
+            groupColor: group.color
+          });
         });
       }
     });
 
     if (allFlashcards.length === 0) {
-      console.log("No flashcards found.");
+      console.log("No flashcards found or no groups enabled.");
       return;
     }
 
@@ -154,9 +158,7 @@ function createOrRemoveBox() {
     const textColor = getContrastYIQ(groupColor);
     const backColor = darkenColor(groupColor, 20);
 
-    console.log("Selected flashcard:", flashcard);
-
-    // Build the flashcard popup using the old CSS classes.
+    // Build the flashcard popup
     const box = document.createElement("div");
     box.id = "flashcard-box";
     box.className = "flashcard-box";
@@ -168,49 +170,37 @@ function createOrRemoveBox() {
       { top: "20px", right: "20px" },
       { top: "20px", left: "20px" }
     ];
-    const pos = positions[Math.floor(Math.random() * positions.length)];
-    for (const prop in pos) {
-      box.style[prop] = pos[prop];
-    }
+    Object.assign(box.style, positions[Math.floor(Math.random() * positions.length)]);
 
-    // Create inner container for flip effect.
     const inner = document.createElement("div");
     inner.className = "flashcard-inner";
 
-    // Create the front face.
     const front = document.createElement("div");
     front.className = "flashcard-face flashcard-front";
     front.innerText = frontText;
     front.style.backgroundColor = groupColor;
     front.style.color = textColor;
 
-    // Create the back face.
     const back = document.createElement("div");
     back.className = "flashcard-face flashcard-back";
     back.innerText = backText;
     back.style.backgroundColor = backColor;
     back.style.color = textColor;
 
-    inner.appendChild(front);
-    inner.appendChild(back);
-    box.appendChild(inner);
+    inner.append(front, back);
+    box.append(inner);
 
-    // Create the close (X) button.
     const closeButton = document.createElement("button");
     closeButton.className = "close-button";
     closeButton.innerText = "X";
-    closeButton.onclick = function(e) {
+    closeButton.onclick = e => {
       e.stopPropagation();
       box.remove();
     };
-    box.appendChild(closeButton);
+    box.append(closeButton);
 
-    // Toggle the flip effect when the box is clicked.
-    box.onclick = function() {
-      box.classList.toggle("flipped");
-    };
-
-    document.body.appendChild(box);
+    box.onclick = () => box.classList.toggle("flipped");
+    document.body.append(box);
   });
 }
 
@@ -220,7 +210,7 @@ function startRandomInterval() {
     const maxTime = data.maxInterval || 10;
     function scheduleNextInjection() {
       const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1) + minTime) * 1000;
-      setTimeout(function() {
+      setTimeout(() => {
         injectBox();
         scheduleNextInjection();
       }, randomTime);
@@ -232,10 +222,9 @@ function startRandomInterval() {
 function injectBox() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     if (!tabs.length) return;
-    const tabId = tabs[0].id;
     chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      function: createOrRemoveBox,
+      target: { tabId: tabs[0].id },
+      function: createOrRemoveBox
     });
   });
 }

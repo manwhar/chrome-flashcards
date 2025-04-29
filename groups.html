@@ -1,175 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Groups</title>
-  <!-- Include Poppins font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <!-- Base styles from popup.css -->
-  <link rel="stylesheet" href="popup.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
   <style>
-    /* === Groups Page Specific Styles === */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-    .logo {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
-    .title {
-      font-size: 22px;
-      color: #cd1fff;
-      flex: 1;
-      text-align: left;
-    }
-    /* Use grid layout so group cards stack side by side */
-    #groupCards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 15px;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-    .group-card {
-      background: #f9f9f9;
-      border: 1px solid #ff57d0;
-      border-radius: 8px;
-      padding: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-      position: relative;
-    }
-    /* (Removed empty .group-card.selected ruleset) */
-    .group-title {
-      font-size: 16px;
-      color: #cd1fff;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-    .flashcards-container {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .flashcard-item {
-      display: flex;
-      border: 1px solid #ff98e2;
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-    .flashcard-front,
-    .flashcard-back {
-      width: 50%;
-      padding: 4px;
-      font-size: 12px;
-      color: #333;
-      text-align: center;
-    }
-    .flashcard-front {
-      border-right: 1px solid #ccc; /* Thin divider */
-    }
-    .no-flashcards {
-      text-align: center;
-      font-size: 12px;
-      color: #999;
-    }
-    /* Delete icon styling */
-    .delete-group-icon,
-    .delete-flashcard-icon {
-      opacity: 0.7;
-      transition: opacity 0.2s ease-in-out;
-    }
-    .delete-group-icon:hover,
-    .delete-flashcard-icon:hover {
-      opacity: 1;
-    }
+  /* === Groups Page Specific Styles === */
 
-    /* New Group Form styling */
-    #newGroupForm {
-      margin-top: 15px;
-      display: none;
-    }
-    #newGroupForm input[type="text"],
-    #newGroupForm input[type="color"],
-    #newGroupForm button {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 8px;
-      border: 2px solid #ff57d0;
-      border-radius: 8px;
-      font-family: inherit;
-      transition: border 0.3s;
-    }
-    /* Ensure standard appearance is removed for color input */
-    #newGroupForm input[type="color"] {
-      appearance: none;
-      -webkit-appearance: none;
-      border: 2px solid #ff57d0;
-      border-radius: 8px;
-      height: 40px;
-      width: 100%;
-      padding: 0;
-      cursor: pointer;
-    }
-    #newGroupForm input[type="color"]::-webkit-color-swatch-wrapper {
-      padding: 0;
-      border-radius: 8px;
-    }
-    #newGroupForm input[type="color"]::-webkit-color-swatch {
-      border: none;
-      border-radius: 8px;
-    }
-    #newGroupForm button {
-      background-color: #ff98e2;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    #newGroupForm button:hover {
-      background-color: #ff57d0;
-    }
-    #newGroupForm label.color-label {
-      font-size: 14px;
-      color: #333;
-      margin-bottom: 5px;
-      display: block;
-    }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.title {
+  font-size: 22px;
+  color: #cd1fff;
+  flex: 1;
+  text-align: left;
+}
+
+#groupCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.group-card {
+  background: #f9f9f9;
+  border: 1px solid #ff57d0;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+}
+
+.group-title {
+  font-size: 16px;
+  color: #cd1fff;
+  margin-top: 6px;
+  margin-left: 50px;
+  margin-bottom: 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flashcards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.flashcard-item {
+  display: flex;
+  border: 1px solid #ff98e2;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.flashcard-front,
+.flashcard-back {
+  width: 50%;
+  padding: 4px;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}
+
+.flashcard-front {
+  border-right: 1px solid #ccc;
+}
+
+.flashcard-item .delete-flashcard-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.flashcard-item .delete-flashcard-icon:hover {
+  opacity: 1;
+}
+
+.group-card .icon-group {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  z-index: 2;
+}
+
+.group-card .icon-group img {
+  width: 22px;
+  height: 22px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.group-card .icon-group img:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+.toggle-switch {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 34px;
+  height: 20px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #ff57d0;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+.edit-name-input {
+  width: 100px; /* ← was 150px */
+  font-size: 16px;
+  border: 2px solid #ff98e2;
+  border-radius: 6px;
+  padding: 4px 6px;
+  background: #fff;
+  color: #333;
+  margin-left: 50px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  outline: none;
+  z-index: 5;
+}
+
+#newGroupForm {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 2px solid #ff57d0;
+  border-radius: 8px;
+  display: none;
+}
+
+#newGroupForm input[type="text"],
+#newGroupForm input[type="color"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid #ff98e2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+#newGroupForm input[type="color"] {
+  height: 40px;
+  cursor: pointer;
+}
+
+#newGroupForm label.color-label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+#saveGroupBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff98e2;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#saveGroupBtn:hover {
+  background-color: #cd1fff;
+}
+
   </style>
 </head>
 <body>
   <div class="popup-container">
     <div class="header">
-      <!-- Main icon (ChromeIcon.png) on top left -->
-      <img src="images/ChromeIcon.png" alt="Logo" class="logo" id="homeLogo" />
-      <!-- Title "Groups" left-aligned -->
+      <img src="images/ChromeIcon.png" class="logo" alt="Logo" id="logoHome">
       <div class="title">Groups</div>
-      <!-- Add Group icon on right -->
       <div class="icon-container">
-        <img src="images/addGroup.png" alt="Add Group" id="addGroupIcon" class="nav-icon" />
+        <img src="images/addGroup.png" alt="Add Group" id="addGroupIcon" class="nav-icon">
+        <img src="images/timerPageIcon.png" alt="Timer Settings" id="settingsIcon" class="nav-icon">
       </div>
     </div>
-    <!-- Container for group cards -->
-    <div id="groupCards">
-      <!-- Group cards will be rendered here by groups.js -->
-    </div>
-    <!-- New Group Form -->
-    <div id="newGroupForm">
-      <input type="text" id="newGroupName" placeholder="Group Name" />
-      <label for="newGroupColor" class="color-label">Group Color</label>
-      <input type="color" id="newGroupColor" value="#ff57d0" />
-      <button id="saveGroupBtn">Save Group</button>
+
+    <div class="content">
+      <div id="groupCards">
+        <!-- Groups dynamically populated here -->
+      </div>
+
+      <div id="newGroupForm">
+        <input type="text" id="newGroupName" placeholder="Group Name">
+        <label for="newGroupColor" class="color-label">Group Color</label>
+        <input type="color" id="newGroupColor" value="#ff57d0">
+        <button id="saveGroupBtn">Save Group</button>
+      </div>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="groups.js"></script>
   <script src="navigation.js"></script>
+  <script>
+    // Make logo go home like popup.html
+    document.getElementById('logoHome').addEventListener('click', function() {
+      window.location.href = 'popup.html';
+    });
+  </script>
 </body>
 </html>
