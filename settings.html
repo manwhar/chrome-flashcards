@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="settings.css">
 </head>
 <body>
-  <div class="settings-container">
+  <div class="popup-container">
     <div class="header">
-      <!-- Home icon (small) to navigate back to main page -->
+      <!-- Left: Logo -->
+      <img src="images/ChromeIcon.png" alt="Logo" class="logo">
+      <!-- Middle: Title -->
+      <div class="title">Flashcards</div>
+      <!-- Right: Two icons for navigation -->
       <div class="icon-container">
-         <img src="images/home.png" alt="Home" id="homeIcon" class="nav-icon">
+         <img src="images/addGroup.png" alt="Add Group" id="addGroupIcon" class="nav-icon">
+         <img src="images/timerPageIcon.png" alt="Settings" id="settingsIcon" class="nav-icon">
       </div>
-      <h2 class="title">Settings</h2>
     </div>
     <h2>Set Timer Interval Range (seconds)</h2>
     <label for="minTimer">Min Interval: <span id="minValue">5</span> sec</label>
