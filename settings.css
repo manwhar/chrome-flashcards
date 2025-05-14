@@ -1,4 +1,3 @@
-/* Styling for the settings container */
 * {
   margin: 0;
   padding: 0;
@@ -24,7 +23,7 @@ body {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Distributes items to the edges */
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 
@@ -43,15 +42,29 @@ body {
 .icon-container {
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  gap: 8px;
+  margin-right: 0;
 }
 
-/* Adjust nav-icon size and spacing */
+/* Updated nav-icon style: larger, raised background */
 .nav-icon {
-  width: 30px;      /* Increased size for better visibility */
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  margin-left: 2px; /* Reduced margin for closer icons */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
 }
 
 /* content styling */
@@ -75,7 +88,7 @@ body {
   border-radius: 8px;
   outline: none;
   transition: border 0.3s;
-  margin-bottom: 15px; /* Spacing between text boxes */
+  margin-bottom: 15px;
 }
 
 .content input[type="text"]:focus {
@@ -90,7 +103,7 @@ body {
 }
 
 .button-group button {
-  width: 150px; /* consistent button size */
+  width: 150px;
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
@@ -100,8 +113,8 @@ body {
   cursor: pointer;
   transition: background 0.3s;
   margin-right: 10px;
-  white-space: nowrap; /* prevent text from wrapping */
-  overflow: hidden;    /* hide overflow if text is too long */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .button-group button:last-child {
@@ -114,7 +127,7 @@ body {
 
 /* Group save container styling */
 .group-save-container {
-  margin-top: 2px;  /* Reduced margin-top to bring it closer to the back text input */
+  margin-top: 2px;
   display: flex;
   justify-content: space-between;
 }
@@ -179,46 +192,7 @@ body {
   background-color: #a610e0;
 }
 
-/* Top-right icon styling */
-.top-right-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-}
-
-.top-right-icon img {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.top-right-icon img:hover {
-  opacity: 1;
-}
-
-.second-top-right-icon {
-  position: absolute;
-  top: 45px; /* Adjust this value to position it right below the top-right icon */
-  right: 10px;
-  width: 24px;
-  height: 24px;
-}
-
-.second-top-right-icon img {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.second-top-right-icon img:hover {
-  opacity: 1;
-}
+/* Settings container */
 .settings-container {
   width: 320px;
   background: #ffffff;
@@ -229,11 +203,6 @@ body {
   text-align: center;
 }
 
-.logo {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
 /* Headings */
 h1 {
   font-size: 24px;

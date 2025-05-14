@@ -2,9 +2,15 @@
   "name": "Flashcards",
   "description": "Chrome Flashcards INDEV",
   "version": "1.0",
-  "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["<all_urls>"], 
   "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "images/ChromeIcon.png"
@@ -12,11 +18,5 @@
   "background": {
     "service_worker": "background.js",
     "persistent": false
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "css": ["styles.css"]
-    }
-  ]
+  }
 }
