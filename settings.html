@@ -24,11 +24,32 @@
          <img src="images/timerPageIcon.png" alt="Settings" id="settingsIcon" class="nav-icon">
       </div>
     </div>
-    <h2>Set Timer Interval Range (seconds)</h2>
-    <label for="minTimer">Min Interval: <span id="minValue">5</span> sec</label>
-    <input type="range" id="minTimer" min="0" max="100" value="5">
-    <label for="maxTimer">Max Interval: <span id="maxValue">10</span> sec</label>
-    <input type="range" id="maxTimer" min="0" max="100" value="10">
+    <h2>Set Timer Interval Range</h2>
+    
+    <div class="input-section">
+      <h3>Minimum Interval</h3>
+      <div class="manual-input">
+        <label for="minMinutes">Minutes:</label>
+        <input type="number" id="minMinutes" min="0" max="20" value="0">
+        <label for="minSeconds">Seconds:</label>
+        <input type="number" id="minSeconds" min="0" max="59" value="5">
+      </div>
+      <label for="minTimer">Slider: <span id="minValue">5</span> sec</label>
+      <input type="range" id="minTimer" min="0" max="1200" value="5" step="1">
+    </div>
+
+    <div class="input-section">
+      <h3>Maximum Interval</h3>
+      <div class="manual-input">
+        <label for="maxMinutes">Minutes:</label>
+        <input type="number" id="maxMinutes" min="0" max="20" value="0">
+        <label for="maxSeconds">Seconds:</label>
+        <input type="number" id="maxSeconds" min="0" max="59" value="10">
+      </div>
+      <label for="maxTimer">Slider: <span id="maxValue">10</span> sec</label>
+      <input type="range" id="maxTimer" min="0" max="1200" value="10" step="1">
+    </div>
+
     <button id="saveBtn">Save Timer Range</button>
   </div>
   <script src="settings.js"></script>
