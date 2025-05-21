@@ -7,208 +7,240 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="popup.css">
   <style>
-  /* === Header Icon Overrides for Groups Page === */
-  .header .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-right: 0;
-  }
-
-  .header .icon-container .nav-icon {
-    width: 36px;
-    height: 36px;
-    padding: 6px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-    cursor: pointer;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-
-  .header .icon-container .nav-icon:hover {
-    transform: scale(1.1);
-    opacity: 0.9;
-  }
-
   /* === Groups Page Specific Styles === */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
 
-  .logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 
-  .title {
-    font-size: 22px;
-    color: #cd1fff;
-    flex: 1;
-    text-align: left;
-  }
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
 
-  #groupCards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
-    max-height: 400px;
-    overflow-y: auto;
-  }
+.title {
+  font-size: 22px;
+  color: #cd1fff;
+  flex: 1;
+  text-align: left;
+}
 
-  .group-card {
-    background: #f9f9f9;
-    border: 1px solid #ff57d0;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-    position: relative;
-  }
+#groupCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
 
-  .group-title {
-    font-size: 16px;
-    color: #cd1fff;
-    margin-top: 6px;
-    margin-left: 50px;
-    margin-bottom: 8px;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.group-card {
+  background: #f9f9f9;
+  border: 1px solid #ff57d0;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: relative;
+}
 
-  .flashcards-container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
+.group-title {
+  font-size: 16px;
+  color: #cd1fff;
+  margin-top: 6px;
+  margin-left: 50px;
+  margin-bottom: 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  .flashcard-item {
-    display: flex;
-    border: 1px solid #ff98e2;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
+.flashcards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
-  .flashcard-front,
-  .flashcard-back {
-    width: 50%;
-    padding: 4px;
-    font-size: 12px;
-    color: #333;
-    text-align: center;
-  }
+.flashcard-item {
+  display: flex;
+  border: 1px solid #ff98e2;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
 
-  .flashcard-front {
-    border-right: 1px solid #ccc;
-  }
+.flashcard-front,
+.flashcard-back {
+  width: 50%;
+  padding: 4px;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}
 
-  .flashcard-item .delete-flashcard-icon {
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    padding: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    cursor: pointer;
-    transition: opacity 0.2s ease-in-out;
-  }
+.flashcard-front {
+  border-right: 1px solid #ccc;
+}
 
-  .flashcard-item .delete-flashcard-icon:hover {
-    opacity: 1;
-  }
+.flashcard-item .delete-flashcard-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
 
-  .group-card .icon-group {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    gap: 4px;
-    align-items: center;
-    z-index: 2;
-  }
+.flashcard-item .delete-flashcard-icon:hover {
+  opacity: 1;
+}
 
-  .group-card .icon-group img {
-    width: 36px;
-    height: 36px;
-    padding: 6px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.group-card .icon-group {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  z-index: 2;
+}
 
-  .group-card .icon-group img:hover {
-    transform: scale(1.1);
-    opacity: 0.9;
-  }
+.group-card .icon-group img {
+  width: 22px;
+  height: 22px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-  #newGroupForm {
-    margin-top: 15px;
-    padding: 10px;
-    background: #f9f9f9;
-    border: 2px solid #ff57d0;
-    border-radius: 8px;
-    display: none;
-  }
+.group-card .icon-group img:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
 
-  #newGroupForm input[type="text"],
-  #newGroupForm input[type="color"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 2px solid #ff98e2;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 14px;
-  }
+.toggle-switch {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 34px;
+  height: 20px;
+}
 
-  #newGroupForm input[type="color"] {
-    height: 40px;
-    cursor: pointer;
-  }
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  #newGroupForm label.color-label {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
-    display: block;
-  }
+.toggle-switch .slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
 
-  #saveGroupBtn {
-    width: 100%;
-    padding: 10px;
-    background-color: #ff98e2;
-    color: white;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.toggle-switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
 
-  #saveGroupBtn:hover {
-    background-color: #cd1fff;
-  }
+.toggle-switch input:checked + .slider {
+  background-color: #ff57d0;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+.edit-name-input {
+  width: 100px; /* ← was 150px */
+  font-size: 16px;
+  border: 2px solid #ff98e2;
+  border-radius: 6px;
+  padding: 4px 6px;
+  background: #fff;
+  color: #333;
+  margin-left: 50px;
+  margin-top: 6px;
+  margin-bottom: 8px;
+  text-align: left;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  outline: none;
+  z-index: 5;
+}
+
+#newGroupForm {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 2px solid #ff57d0;
+  border-radius: 8px;
+  display: none;
+}
+
+#newGroupForm input[type="text"],
+#newGroupForm input[type="color"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 2px solid #ff98e2;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+#newGroupForm input[type="color"] {
+  height: 40px;
+  cursor: pointer;
+}
+
+#newGroupForm label.color-label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+#saveGroupBtn {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff98e2;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#saveGroupBtn:hover {
+  background-color: #cd1fff;
+}
+
   </style>
 </head>
 <body>
