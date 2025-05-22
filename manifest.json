@@ -12,11 +12,5 @@
   "background": {
     "service_worker": "background.js",
     "persistent": false
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "css": ["styles.css"]
-    }
-  ]
+  }
 }
