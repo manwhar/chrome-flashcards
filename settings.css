@@ -40,19 +40,34 @@ body {
 }
 
 /* Icon container for header icons */
+/* Icon container for header icons */
 .icon-container {
   display: flex;
   align-items: center;
-  margin-right: 4px;
+  gap: 8px;
+  margin-right: 0;
 }
 
-/* Adjust nav-icon size and spacing */
+/* Raised-circle nav icons */
 .nav-icon {
-  width: 30px;      /* Increased size for better visibility */
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  margin-left: 2px; /* Reduced margin for closer icons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
+
+.nav-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
 
 /* content styling */
 .content h3 {
