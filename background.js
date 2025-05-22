@@ -64,18 +64,26 @@ function createOrRemoveBox() {
 
       /* Close (X) button styling */
       .close-button {
-        position: absolute;
-        top: -12px;
-        right: -12px;
-        width: 24px;
-        height: 24px;
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        font-size: 14px;
-        cursor: pointer;
-        z-index: 2;
+        position: absolute !important;
+        top: -12px !important;
+        right: -12px !important;
+        width: 24px !important;
+        height: 24px !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 50% !important;
+        font-size: 14px !important;
+        line-height: 24px !important;
+        text-align: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        z-index: 2 !important;
+        outline: none !important;
       }
     `;
     document.head.appendChild(style);
